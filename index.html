@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <title>Bearth Mother Reframe Tool</title>
+  <style>
+  body { font-family: Georgia, serif; background:#e9e6da; color:#2f3b2f; max-width:600px; margin:40px auto; padding:0 20px; }
+textarea { width:100%; height:120px; font-size:16px; padding:10px; }
+button { background:#3d4d3d; color:white; padding:10px 20px; border:none; margin-top:10px; cursor:pointer; }
+#output { margin-top:20px; padding:15px; background:white; border-radius:8px; white-space:pre-wrap; }
+.disclaimer { font-size:12px; color:#666; margin-top:20px; }
+</style>
+  </head>
+  <body>
+  <h1>bearth mother reframe tool</h1>
+  <p>Paste the sleep advice you were given. We will show you another way to see it.</p>
+<textarea id="input" placeholder="e.g. Your baby needs to learn to self-soothe..."></textarea>
+<br />
+<button onclick="reframe()">Reframe this</button>
+  <div id="output"></div>
+  <p class="disclaimer">This is a perspective tool, not medical advice. If you're worried about your baby's health or safety, talk to your pediatrician.</p>
+  <script>
+  async function reframe() {
+    const input = document.getElementById('input').value;
+  const output = document.getElementById('output');
+  output.innerText = "Thinking...";
+  const res = await fetch('/api/reframe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ input })
+    });
+  const data = await res.json();
+  output.innerText = data.result;
+}
+</script>
+</body>
+</html>
